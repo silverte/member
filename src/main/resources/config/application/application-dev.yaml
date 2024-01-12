@@ -1,0 +1,20 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+#    url: jdbc:log4jdbc:h2:mem:localdb
+#    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:h2:mem:localdb
+    driverClassName: org.h2.Driver
+    username : admin
+    password : admin
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql : true

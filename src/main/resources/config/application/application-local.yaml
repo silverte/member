@@ -1,0 +1,24 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:localdb
+    driverClassName: org.h2.Driver
+    username : admin
+    password : admin
+    initialization-mode: always
+    data: classpath:db/member/member.sql
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql : false
+  kafka:
+    bootstrap-servers: localhost:9092
+#    producer:
+#      value-serializer:

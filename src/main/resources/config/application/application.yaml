@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rest-member-api
+  profiles:
+    active: local
+
+mybatis:
+  type-aliases-package: com.skcc.cloud.member.domain
+  mapper-locations: db/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: on
+
+logging:
+  config: classpath:config/log/logback-${spring.profiles.active}.xml
