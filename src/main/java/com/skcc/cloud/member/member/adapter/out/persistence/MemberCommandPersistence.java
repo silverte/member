@@ -1,31 +1,32 @@
 package com.skcc.cloud.member.member.adapter.out.persistence;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.skcc.cloud.member.common.annotation.PersistenceAdapter;
+import com.skcc.cloud.member.common.outbox.OutboxEvent;
+import com.skcc.cloud.member.common.outbox.QOutboxEvent;
 import com.skcc.cloud.member.member.application.port.out.MemberCommandPersistencePort;
 import com.skcc.cloud.member.member.domain.Member;
-import com.skcc.cloud.member.member.domain.OutboxEvent;
-import com.skcc.cloud.member.member.domain.QMember;
-import com.skcc.cloud.member.member.domain.QOutboxEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MemberCommandPersistence implements MemberCommandPersistencePort {
 
-    private final JPAQueryFactory queryFactory;
-    private final ModelMapper modelMapper;
+    private final JPAQueryFactory query;
+    private final MemberCommandPersistenceRepository repository;
 
     @Override
     public Member insertMember(Member member) {
         log.debug("[PersistenceAdapter] MemberCommandPersistence Called - insertMember [{}]", member);
+        return repository.save(member);
 
+        /* QueryDsl
         QMember qMember = QMember.member;
-        long rows = queryFactory.insert(qMember)
+        long rows = query.insert(qMember)
                             .columns(qMember.email).values(member.getEmail())
                             .columns(qMember.name).values(member.getName())
                 .execute();
@@ -34,24 +35,29 @@ public class MemberCommandPersistence implements MemberCommandPersistencePort {
         return queryFactory.selectFrom(qMember)
                 .where(qMember.email.eq(member.getEmail()))
                 .fetchOne();
+         */
     }
 
     @Override
-    public Member findByEmail(String email) {
+    public Optional<Member> findByEmail(String email) {
         log.debug("[PersistenceAdapter] MemberCommandPersistence Called - findByEmail [{}]", email);
+        return repository.findByEmail(email);
+
+        /* QueryDsl
         QMember qMember = QMember.member;
-        return queryFactory
+        return Optional.ofNullable(query
                 .selectFrom(qMember)
                 .where(qMember.email.eq(email))
-                .fetchOne();
+                .fetchOne());
+         */
     }
 
     @Override
     public void recordEventToOutboxTable(OutboxEvent outboxEvent) {
         log.debug("[PersistenceAdapter] MemberCommandPersistence Called - recordEventToOutboxTable [{}]", outboxEvent);
 
-        QOutboxEvent qOutboxEvent = QOutboxEvent.outboxEvent;
-        long rows = queryFactory.insert(qOutboxEvent)
+        final QOutboxEvent qOutboxEvent = QOutboxEvent.outboxEvent;
+        long rows = query.insert(qOutboxEvent)
                 .columns(qOutboxEvent.aggregateType).values(outboxEvent.getAggregateType())
                 .columns(qOutboxEvent.aggregateId).values(outboxEvent.getAggregateId())
                 .columns(qOutboxEvent.eventType).values(outboxEvent.getEventType())

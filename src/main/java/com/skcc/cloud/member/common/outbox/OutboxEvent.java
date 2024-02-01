@@ -1,4 +1,4 @@
-package com.skcc.cloud.member.member.domain;
+package com.skcc.cloud.member.common.outbox;
 
 
 import jakarta.persistence.*;

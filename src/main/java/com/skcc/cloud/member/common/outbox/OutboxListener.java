@@ -1,4 +1,4 @@
-package com.skcc.cloud.member.member.domain;
+package com.skcc.cloud.member.common.outbox;
 
 import com.skcc.cloud.member.member.application.port.out.MemberCommandMessageQueuePort;
 import com.skcc.cloud.member.member.application.port.out.MemberCommandPersistencePort;

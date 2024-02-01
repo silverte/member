@@ -3,10 +3,9 @@ package com.skcc.cloud.member.member.application.service.event;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skcc.cloud.member.member.domain.EventStatus;
+import com.skcc.cloud.member.common.outbox.EventStatus;
 import com.skcc.cloud.member.member.domain.Member;
-import com.skcc.cloud.member.member.domain.Outboxable;
-import jakarta.persistence.EnumType;
+import com.skcc.cloud.member.common.outbox.Outboxable;
 
 import java.time.Instant;
 
@@ -39,7 +38,7 @@ public class MemberJoinedEvent implements Outboxable {
 
     @Override
     public String getAggregateType() {
-        return Member.class.getName();
+        return Member.class.getSimpleName();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class MemberJoinedEvent implements Outboxable {
 
     @Override
     public String getEventType() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 
     @Override

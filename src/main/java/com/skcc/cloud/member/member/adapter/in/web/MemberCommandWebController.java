@@ -1,6 +1,5 @@
 package com.skcc.cloud.member.member.adapter.in.web;
 
-import com.skcc.cloud.member.common.annotation.WebAdapter;
 import com.skcc.cloud.member.member.application.port.in.MemberCommandRequestDTO;
 import com.skcc.cloud.member.member.application.port.in.MemberCommandUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@WebAdapter
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")

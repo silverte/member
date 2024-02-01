@@ -1,15 +1,11 @@
 package com.skcc.cloud.member.member.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Data
 @Entity
 public class Member {
 
@@ -19,9 +15,9 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
-    private String email;
+    private String name;
 
     @Column(nullable = false)
-    private String name;
+    private String email;
 
 }
